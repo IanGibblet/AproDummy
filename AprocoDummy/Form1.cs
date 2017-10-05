@@ -101,6 +101,8 @@ namespace AprocoDummy
                     Client.CurrentSpace.SoftTypes.SoftTypeDictionary.TryGetValue("BDABreakdownElement", out type); //Set the Search Softtype 
                     JObject J = SearchSoftTypeItem(type, "IanTestBreakdown", "name", StringComparison.InvariantCultureIgnoreCase);
 
+                    string href = (string)J["data"]["id"];
+
 
                     
 
