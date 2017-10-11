@@ -24,12 +24,12 @@ using RestfulEA.Models;
 
 namespace AprocoDummy
 {
-    public partial class Form1 : Form
+    public partial class frmMain : Form
     {
 
         static string CurrentSpaceName = "Aprocone"; //The Current Working Space Name
 
-        public Form1()
+        public frmMain()
         {
             InitializeComponent();
         }
@@ -61,7 +61,11 @@ namespace AprocoDummy
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Client.Host = new Uri("https://sas.aprocone.cfms.org.uk/api/"); //Accessing on Port 443 (HTTPS)
+
+            string URI = txtSaS_URI.Text;
+            statusStrip.Text = "Attempting to log in to " + URI;
+
+            Client.Host = new Uri(URI); //Accessing on Port 443 (HTTPS)
             var isLoggedIn = Client.SignIn("admin@eurostep.com", "pAssw0rd", Client.Host); //Login to ShareAspace
             //USE MY OWN CREDENTIALS
 
@@ -69,65 +73,55 @@ namespace AprocoDummy
 
             if (isLoggedIn) //Is Logged In?
             {
-                Console.WriteLine("Successfully Logged in as admin@eurostep.com ");
+
+                statusStrip.Text = "Successfully Logged in as admin@eurostep.com";
+              
                 try
                 {
                     Client.SetWorkingSpace(Client.Auth, CurrentSpaceName);
-                
-                    //Examples------------
-
-                    //List All Queries
-                 //   foreach (var item in Client.CurrentSpace.QueriesInSpace.Queries)
-                 //   {
-                  //      Console.WriteLine(item.Href);
-                 //   }
-
-                  //  var obj = MySearch.SearchStudy("IanTestStudy", "name");
-
-                  //  JObject myJobject = obj;
-
-                 //   Client.CurrentSpace.QueriesInSpace.GetQueryByName("IanTestStudy");
-
-                 //   txtBreakdowns.Text = obj.ToString();
-
-                  //  string MyName =  obj["components"][""]?.Value<string>();
-
-                //    SoftType myST;
-
-                 //   Client.CurrentSpace.SoftTypes.SoftTypeDictionary.TryGetValue("Study", out myST);
-                   // string x=  myST.SearchAllHref;
-
-                    SoftType type;                           
-                    Client.CurrentSpace.SoftTypes.SoftTypeDictionary.TryGetValue("BDABreakdownElement", out type); //Set the Search Softtype 
-                    JObject J = SearchSoftTypeItem(type, "IanTestBreakdown", "name", StringComparison.InvariantCultureIgnoreCase);
-
-                    string href = (string)J["data"]["id"];
 
 
-                    
+                    //Example code to get a single software type
+                    /*  SoftType type;
+                      Client.CurrentSpace.SoftTypes.SoftTypeDictionary.TryGetValue("BDABreakdownElement", out type); //Set the Search Softtype 
+                      JObject J = SearchSoftTypeItem(type, "IanTestBreakdown", "name", StringComparison.InvariantCultureIgnoreCase);
 
-                    //MySearch.SearchAllStudies();
+                      string href = (string)J["data"]["id"];
+                      */
+
+                    SoftType type;
+
+                    Client.CurrentSpace.SoftTypes.SoftTypeDictionary.TryGetValue("BDABreakdownElement", out type);
+                    var results = SearchAllItemsOfType(type);
+
+                    dgvBreakDownElements.Columns.Add("Name,", "Name");
+                    dgvBreakDownElements.Columns.Add("CreatedBy,", "CreatedBy");
+                    dgvBreakDownElements.Columns.Add("Type,", "Type");
 
 
 
-                    //SearchDemoNextPage(); //Search throug Softtype example
-                    //SearchWithQueries(); //Searh through Queries Example
+                    for (int i = 0; i < results.Count; i++)
+                    {
+                        string NameOfBDE = (string)results[i]["data"]["name"];
+                        string IDofBDE = (string)results[i]["data"]["id"];
+                        string CreatedBy = (string)results[i]["data"]["commonDefinitionCreatedBy"];
+                        dgvBreakDownElements.Rows.Add(NameOfBDE, CreatedBy, IDofBDE);
 
-                    //var pVal=MySearch.GetPersonById("praj.rathore@eurostep.com");
-                    //Console.WriteLine(pVal);
-                    //MyUpdates.UpdateStudyWithAMN(); //Update AMN Client Two with Study Ten
+                    }
 
-                    #region Search Examples
-                    //var obj=MySearch.SearchStudy("Study Twenty", "name");
-                    //MySearch.SearchBDARankWeightType();
-                    //MySearch.SearchAllStudies();
-                    //Console.WriteLine(MySearch.GetAMNByName("AMN One"));
-                    //Console.WriteLine(obj);
-                    #endregion
+                    statusStrip.Text = results.Count + " breakdown elements found"; 
+
+
+
+                   
+
+
                 }
                 catch (SpaceException se) //Error Fetching Space
                 {
                     Console.WriteLine(se); //Print the Error Message if there was a problem setting space
+                    statusStrip.Text = se.Message;
+
                 }
 
 
@@ -137,36 +131,103 @@ namespace AprocoDummy
 
         }
 
+        /// <summary>
+        /// Generic: Get all items of a given softtype.
+        /// </summary>
+        /// <param name="type">Softtype</param>
+        /// <permission cref="System.Security.PermissionSet">Public Access</permission>
+        public static System.Collections.Generic.List<JObject> SearchAllItemsOfType(SoftType type)
+        {
+            Search softType = new Search(new Uri(type.SearchAllHref));
+            var results = softType.GetAll(new Uri(type.SearchAllHref));
+            //Console.WriteLine(results.Count);
+            return results;
+        }
+
+
         private void btnShowElements_Click(object sender, EventArgs e)
         {
 
+            statusStrip.Text = "Creating Web request for URI";
 
-        
 
-            string URI = "http://localhost:56901/RESTEA/IanTest/Dia_Thingswithtags|otDiagram|%7B49763E96-79D0-4690-8109-EF6AE0511259%7D";
-           // string myParameters = "field=value1&field2=value2";
+
+            string URI = txtDiagramURL.Text;
+            // string myParameters = "field=value1&field2=value2";
+
+
+            //WebRequest request = WebRequest.Create(URI);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URI);
+            request.Accept = "application/json";
+            request.ContentType = "application/json; charset=utf-8";
 
    
+           
 
-            WebClient wc = new WebClient();
-            wc.Headers.Add("Accept", "application/json");
-            string getpage = wc.DownloadString(URI);
-            getpage.Replace("\\", "");
+            try
+            {
+             WebResponse response = request.GetResponse();
+
+             Stream DataStream = response.GetResponseStream();
+             StreamReader reader = new StreamReader(DataStream);
+                
+             string json = reader.ReadToEnd();
+             
+             //Fix the extra characters that are added to the JSON string   
+             json = AprocoDummy.SupportClasses.AproSupport.FixJSonString(json);
+
+             //Deserialise   
+             dynamic dynobject = JObject.Parse(json);
+
+                string DiagramName = (string)dynobject["DiagramName"];
+                string DiagramType = (string)dynobject["DiagramType"];
+             
 
 
 
-            EA_Diagram MyDia = JsonConvert.DeserializeObject<EA_Diagram>(getpage);
+                dgvEA_Elements.Columns.Add("Name,", "Name");
+                dgvEA_Elements.Columns.Add("Type,", "Type");
 
 
-            string name = MyDia.DiagramGUID;
+                //For every element in the element dictionary
+                for (int i = 0; i < dynobject["ElementDictionary"].Count; i++)
+                {
+                    string EleName = (string)dynobject["ElementDictionary"][i]["Key"];
+                    string EleType = (string)dynobject["ElementDictionary"][i]["Value"];
+                    string EleGUID = (string)dynobject["ElementDictionary"][i]["Value"];
+
+                    dgvEA_Elements.Rows.Add(EleName, EleType);
+                }
+
+                statusStrip.Text = dynobject["ElementDictionary"].Count + " diagram elements from EA were found";
+
+                List<string> ListEleName = new List<string>();
+
+                txtDiagramName.Text = DiagramName;
+                txtDiagramType.Text = DiagramType;
+
+
+            }
+
+            catch(Exception ex)
+            {
+                statusStrip.Text = ex.Message;
+            }
+
+     
 
 
 
+        
+            
 
 
-       
+            // string DiagramGUID = (string)myresults[0]["DiagramGUID"];
 
+        }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
 
         }
     }
