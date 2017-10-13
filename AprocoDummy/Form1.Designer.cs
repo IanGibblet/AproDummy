@@ -43,6 +43,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtDiagramName = new System.Windows.Forms.TextBox();
             this.txtDiagramType = new System.Windows.Forms.TextBox();
+            this.btnSmlPreview = new System.Windows.Forms.Button();
+            this.btnLargePreview = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBreakDownElements)).BeginInit();
             this.AproStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEA_Elements)).BeginInit();
@@ -60,32 +62,30 @@
             // 
             // btnShowElements
             // 
-            this.btnShowElements.Location = new System.Drawing.Point(33, 384);
+            this.btnShowElements.Location = new System.Drawing.Point(33, 328);
             this.btnShowElements.Name = "btnShowElements";
-            this.btnShowElements.Size = new System.Drawing.Size(283, 23);
+            this.btnShowElements.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnShowElements.Size = new System.Drawing.Size(146, 23);
             this.btnShowElements.TabIndex = 2;
-            this.btnShowElements.Text = "Show Elements";
+            this.btnShowElements.Text = "Parse JSON";
             this.btnShowElements.UseVisualStyleBackColor = true;
             this.btnShowElements.Click += new System.EventHandler(this.btnShowElements_Click);
             // 
             // txtDiagramURL
             // 
-            this.txtDiagramURL.Location = new System.Drawing.Point(336, 387);
+            this.txtDiagramURL.Location = new System.Drawing.Point(33, 357);
             this.txtDiagramURL.Name = "txtDiagramURL";
-            this.txtDiagramURL.Size = new System.Drawing.Size(631, 20);
+            this.txtDiagramURL.Size = new System.Drawing.Size(655, 20);
             this.txtDiagramURL.TabIndex = 3;
-            this.txtDiagramURL.Text = "http://localhost:56901/RESTEA/IanTest/Dia_Thingswithtags|otDiagram|%7B49763E96-79" +
-    "D0-4690-8109-EF6AE0511259%7D";
+            this.txtDiagramURL.Text = "http://localhost:56901/SPC/IanTest/Dia_Thingswithtags|otDiagram|%7B49763E96-79D0-" +
+    "4690-8109-EF6AE0511259%7D";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(333, 368);
+            this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Diagram URL";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.label1.Size = new System.Drawing.Size(100, 23);
+            this.label1.TabIndex = 17;
             // 
             // dgvBreakDownElements
             // 
@@ -113,9 +113,9 @@
             // 
             this.AproStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusStrip});
-            this.AproStatus.Location = new System.Drawing.Point(0, 632);
+            this.AproStatus.Location = new System.Drawing.Point(0, 738);
             this.AproStatus.Name = "AproStatus";
-            this.AproStatus.Size = new System.Drawing.Size(979, 22);
+            this.AproStatus.Size = new System.Drawing.Size(992, 22);
             this.AproStatus.TabIndex = 9;
             this.AproStatus.Text = "AproDummy";
             // 
@@ -130,18 +130,18 @@
             this.dgvEA_Elements.AllowUserToAddRows = false;
             this.dgvEA_Elements.AllowUserToDeleteRows = false;
             this.dgvEA_Elements.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvEA_Elements.Location = new System.Drawing.Point(33, 414);
+            this.dgvEA_Elements.Location = new System.Drawing.Point(33, 455);
             this.dgvEA_Elements.Name = "dgvEA_Elements";
             this.dgvEA_Elements.ReadOnly = true;
             this.dgvEA_Elements.RowHeadersVisible = false;
-            this.dgvEA_Elements.Size = new System.Drawing.Size(398, 168);
+            this.dgvEA_Elements.Size = new System.Drawing.Size(359, 203);
             this.dgvEA_Elements.TabIndex = 10;
             // 
             // txtSaS_URI
             // 
             this.txtSaS_URI.Location = new System.Drawing.Point(237, 68);
             this.txtSaS_URI.Name = "txtSaS_URI";
-            this.txtSaS_URI.Size = new System.Drawing.Size(730, 20);
+            this.txtSaS_URI.Size = new System.Drawing.Size(427, 20);
             this.txtSaS_URI.TabIndex = 11;
             this.txtSaS_URI.Text = "https://sas.aprocone.cfms.org.uk/api";
             // 
@@ -157,7 +157,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(452, 432);
+            this.label2.Location = new System.Drawing.Point(37, 396);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 13);
             this.label2.TabIndex = 13;
@@ -166,7 +166,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(452, 462);
+            this.label4.Location = new System.Drawing.Point(37, 422);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 13);
             this.label4.TabIndex = 13;
@@ -175,7 +175,7 @@
             // txtDiagramName
             // 
             this.txtDiagramName.Enabled = false;
-            this.txtDiagramName.Location = new System.Drawing.Point(535, 429);
+            this.txtDiagramName.Location = new System.Drawing.Point(120, 393);
             this.txtDiagramName.Name = "txtDiagramName";
             this.txtDiagramName.Size = new System.Drawing.Size(272, 20);
             this.txtDiagramName.TabIndex = 14;
@@ -183,17 +183,39 @@
             // txtDiagramType
             // 
             this.txtDiagramType.Enabled = false;
-            this.txtDiagramType.Location = new System.Drawing.Point(535, 459);
+            this.txtDiagramType.Location = new System.Drawing.Point(120, 419);
             this.txtDiagramType.Name = "txtDiagramType";
             this.txtDiagramType.Size = new System.Drawing.Size(272, 20);
             this.txtDiagramType.TabIndex = 14;
+            // 
+            // btnSmlPreview
+            // 
+            this.btnSmlPreview.Location = new System.Drawing.Point(185, 328);
+            this.btnSmlPreview.Name = "btnSmlPreview";
+            this.btnSmlPreview.Size = new System.Drawing.Size(146, 23);
+            this.btnSmlPreview.TabIndex = 15;
+            this.btnSmlPreview.Text = "Small Preview";
+            this.btnSmlPreview.UseVisualStyleBackColor = true;
+            this.btnSmlPreview.Click += new System.EventHandler(this.btnSmlPreview_Click);
+            // 
+            // btnLargePreview
+            // 
+            this.btnLargePreview.Location = new System.Drawing.Point(337, 328);
+            this.btnLargePreview.Name = "btnLargePreview";
+            this.btnLargePreview.Size = new System.Drawing.Size(146, 23);
+            this.btnLargePreview.TabIndex = 16;
+            this.btnLargePreview.Text = "Large Preview";
+            this.btnLargePreview.UseVisualStyleBackColor = true;
+            this.btnLargePreview.Click += new System.EventHandler(this.btnLargePreview_Click);
             // 
             // frmMain
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.Grip;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(979, 654);
+            this.ClientSize = new System.Drawing.Size(992, 760);
+            this.Controls.Add(this.btnLargePreview);
+            this.Controls.Add(this.btnSmlPreview);
             this.Controls.Add(this.txtDiagramType);
             this.Controls.Add(this.txtDiagramName);
             this.Controls.Add(this.label4);
@@ -237,6 +259,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtDiagramName;
         private System.Windows.Forms.TextBox txtDiagramType;
+        private System.Windows.Forms.Button btnSmlPreview;
+        private System.Windows.Forms.Button btnLargePreview;
     }
 }
 

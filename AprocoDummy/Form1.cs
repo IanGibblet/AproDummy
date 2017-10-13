@@ -226,9 +226,18 @@ namespace AprocoDummy
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
 
+
+        private void btnSmlPreview_Click(object sender, EventArgs e)
+        {
+            string URL = txtDiagramURL.Text + "/SmallPreview";
+            System.Diagnostics.Process.Start(URL);
+        }
+
+        private void btnLargePreview_Click(object sender, EventArgs e)
+        {
+            string URL = txtDiagramURL.Text + "/BigPreview";
+            System.Diagnostics.Process.Start(URL);
         }
     }
 }
