@@ -45,7 +45,7 @@
             this.txtDiagramType = new System.Windows.Forms.TextBox();
             this.btnSmlPreview = new System.Windows.Forms.Button();
             this.btnLargePreview = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnLink = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBreakDownElements)).BeginInit();
             this.AproStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEA_Elements)).BeginInit();
@@ -59,7 +59,7 @@
             this.btnShowBreakdowns.TabIndex = 0;
             this.btnShowBreakdowns.Text = "Show all Breakdown Elements";
             this.btnShowBreakdowns.UseVisualStyleBackColor = true;
-            this.btnShowBreakdowns.Click += new System.EventHandler(this.button1_Click);
+            this.btnShowBreakdowns.Click += new System.EventHandler(this.GetGetSaSObject);
             // 
             // btnShowElements
             // 
@@ -98,7 +98,7 @@
             this.dgvBreakDownElements.RowHeadersVisible = false;
             this.dgvBreakDownElements.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvBreakDownElements.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvBreakDownElements.Size = new System.Drawing.Size(934, 187);
+            this.dgvBreakDownElements.Size = new System.Drawing.Size(867, 187);
             this.dgvBreakDownElements.TabIndex = 7;
             // 
             // lblFeedback
@@ -209,14 +209,15 @@
             this.btnLargePreview.UseVisualStyleBackColor = true;
             this.btnLargePreview.Click += new System.EventHandler(this.btnLargePreview_Click);
             // 
-            // button1
+            // btnLink
             // 
-            this.button1.Location = new System.Drawing.Point(703, 65);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(88, 23);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "Link Break";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnLink.Location = new System.Drawing.Point(763, 657);
+            this.btnLink.Name = "btnLink";
+            this.btnLink.Size = new System.Drawing.Size(217, 78);
+            this.btnLink.TabIndex = 20;
+            this.btnLink.Text = "Link";
+            this.btnLink.UseVisualStyleBackColor = true;
+            this.btnLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
             // frmMain
             // 
@@ -224,7 +225,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(992, 760);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnLink);
             this.Controls.Add(this.btnLargePreview);
             this.Controls.Add(this.btnSmlPreview);
             this.Controls.Add(this.txtDiagramType);
@@ -272,7 +273,7 @@
         private System.Windows.Forms.TextBox txtDiagramType;
         private System.Windows.Forms.Button btnSmlPreview;
         private System.Windows.Forms.Button btnLargePreview;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnLink;
     }
 }
 

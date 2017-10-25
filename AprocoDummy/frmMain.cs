@@ -20,7 +20,7 @@ using System.Net;
 using Newtonsoft.Json;
 using System.IO;
 using RestfulEA.Models;
-
+using System.Net.Http;
 
 namespace AprocoDummy
 {
@@ -59,7 +59,7 @@ namespace AprocoDummy
             return null;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void GetGetSaSObject(object sender, EventArgs e)
         {
 
             string URI = txtSaS_URI.Text;
@@ -80,7 +80,6 @@ namespace AprocoDummy
                 {
                     Client.SetWorkingSpace(Client.Auth, CurrentSpaceName);
 
-
                     //Example code to get a single software type
                     /*  SoftType type;
                       Client.CurrentSpace.SoftTypes.SoftTypeDictionary.TryGetValue("BDABreakdownElement", out type); //Set the Search Softtype 
@@ -96,7 +95,7 @@ namespace AprocoDummy
 
                     dgvBreakDownElements.Columns.Add("Name,", "Name");
                     dgvBreakDownElements.Columns.Add("CreatedBy,", "CreatedBy");
-                    dgvBreakDownElements.Columns.Add("Type,", "Type");
+                    dgvBreakDownElements.Columns.Add("Identifier,", "Identifier");
 
 
 
@@ -142,6 +141,19 @@ namespace AprocoDummy
             var results = softType.GetAll(new Uri(type.SearchAllHref));
             //Console.WriteLine(results.Count);
             return results;
+        }
+
+        private static void UpdateSoftType(SoftType type, JObject JsonPostData)
+        {
+            string oid = JsonPostData["$oid"]?.Value<string>();
+            HttpResponseMessage response = null;
+            try
+            {
+                response = Client.Auth?.Helper?.Put(type.UpdateHref + oid, JsonPostData);
+                response.EnsureSuccessStatusCode(); //Ensure the Post was succcessfull.
+                Console.WriteLine(type.Name + " Posted successfully at " + response.Headers.Location);
+            }
+            catch (HttpRequestException) { Console.WriteLine(ClientCore.Exceptions.CoreExceptions.GetRestResponseExceptionString(response)); }
         }
 
 
@@ -239,5 +251,52 @@ namespace AprocoDummy
             string URL = txtDiagramURL.Text + "/BigPreview";
             System.Diagnostics.Process.Start(URL);
         }
+
+        private void btnLink_Click(object sender, EventArgs e)
+        {
+            string URI = txtSaS_URI.Text;
+            statusStrip.Text = "Attempting to log in to " + URI;
+
+            Client.Host = new Uri(URI); //Accessing on Port 443 (HTTPS)
+            var isLoggedIn = Client.SignIn("admin@eurostep.com", "pAssw0rd", Client.Host); //Login to ShareAspace
+                                                                                           //USE MY OWN CREDENTIALS
+
+
+         
+            string SelectedBreakdown = (dgvBreakDownElements.SelectedCells[0].Value.ToString());
+
+            if (SelectedBreakdown == null )
+
+            {
+                statusStrip.Text = "No SaS object selected";
+                return;
+            }
+
+
+            if (isLoggedIn) //Is Logged In?
+            {
+                SoftType type;
+
+                Client.SetWorkingSpace(Client.Auth, CurrentSpaceName);
+                Client.CurrentSpace.SoftTypes.SoftTypeDictionary.TryGetValue("BDABreakdownElement", out type); //Set the Search Softtype 
+
+                JObject J = SearchSoftTypeItem(type, SelectedBreakdown, "name", StringComparison.InvariantCultureIgnoreCase);
+
+                JArray myJarray = (JArray)J["name"];
+
+                JObject J_Container = new JObject();
+               
+              
+
+                UpdateSoftType(type, J);
+
+
+            }
+
+        }
+
+
+
+
     }
 }
