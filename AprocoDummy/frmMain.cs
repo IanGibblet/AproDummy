@@ -272,6 +272,16 @@ namespace AprocoDummy
                 return;
             }
 
+            String Preview = null;
+            if (radBtnSmallPreview.Checked == true) Preview = txtDiagramURL.Text + "/SmallPreview";
+            if (radBtnLargePreview.Checked == true) Preview = txtDiagramURL.Text + "/BigPreview";
+
+            if (Preview == null) return;
+
+
+
+           
+
 
             if (isLoggedIn) //Is Logged In?
             {
@@ -281,15 +291,12 @@ namespace AprocoDummy
                 Client.CurrentSpace.SoftTypes.SoftTypeDictionary.TryGetValue("BDABreakdownElement", out type); //Set the Search Softtype 
 
                 JObject J = SearchSoftTypeItem(type, SelectedBreakdown, "name", StringComparison.InvariantCultureIgnoreCase);
-
-                JArray myJarray = (JArray)J["name"];
-
-                JObject J_Container = new JObject();
-               
+                J["data"]["description"] = Preview;
+                JObject PostData = J["data"].ToObject<JObject>();
               
 
-                UpdateSoftType(type, J);
-
+                UpdateSoftType(type, PostData);
+                statusStrip.Text = "OSLC Preview link saved";
 
             }
 
