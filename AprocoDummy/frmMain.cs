@@ -61,6 +61,10 @@ namespace AprocoDummy
 
         private void GetGetSaSObject(object sender, EventArgs e)
         {
+            //First wipe the data grid view
+            dgvBreakDownElements.Rows.Clear();
+
+
 
             string URI = txtSaS_URI.Text;
             statusStrip.Text = "Attempting to log in to " + URI;
@@ -178,45 +182,58 @@ namespace AprocoDummy
 
             try
             {
+
+            //Get the JSON string and deserialise it
              WebResponse response = request.GetResponse();
-
              Stream DataStream = response.GetResponseStream();
-             StreamReader reader = new StreamReader(DataStream);
-                
+             StreamReader reader = new StreamReader(DataStream);               
              string json = reader.ReadToEnd();
-             
-             //Fix the extra characters that are added to the JSON string   
-             json = AprocoDummy.SupportClasses.AproSupport.FixJSonString(json);
+             dynamic dynobject = JObject.Parse(json);     
 
-             //Deserialise   
-             dynamic dynobject = JObject.Parse(json);
-
-                string DiagramName = (string)dynobject["DiagramName"];
-                string DiagramType = (string)dynobject["DiagramType"];
-             
+             dgvEA_Elements.Columns.Add("Name,", "Name");
+             dgvEA_Elements.Columns.Add("Type,", "Type");
 
 
-
-                dgvEA_Elements.Columns.Add("Name,", "Name");
-                dgvEA_Elements.Columns.Add("Type,", "Type");
-
-
-                //For every element in the element dictionary
-                for (int i = 0; i < dynobject["ElementDictionary"].Count; i++)
+                //DIAGRAM ELEMENTS
+                for (int i = 0; i < dynobject["Elements"]["Element Array"].Count; i++)
                 {
-                    string EleName = (string)dynobject["ElementDictionary"][i]["Key"];
-                    string EleType = (string)dynobject["ElementDictionary"][i]["Value"];
-                    string EleGUID = (string)dynobject["ElementDictionary"][i]["Value"];
+                     //Split up the element properties
+                     string WholeDiagramURL = dynobject["Elements"]["Element Array"][i]; 
+                     var DiagramURLarray = WholeDiagramURL.Split('/');
+                     string[] UrlArray = DiagramURLarray[DiagramURLarray.Count()-1].Split('|');
+                    
+                     //Send the the screen.
+                     string EleName = UrlArray[0];
+                     string EleType = UrlArray[1];
+                     string EleGUID = UrlArray[2];
+                     dgvEA_Elements.Rows.Add(EleName, EleType);
+                }
+                statusStrip.Text = dynobject["Elements"]["Element Array"].Count + " diagram elements from EA were found";
 
-                    dgvEA_Elements.Rows.Add(EleName, EleType);
+                //DIAGRAM LINKS
+                for (int i = 0; i < dynobject["Elements"]["Link Array"].Count; i++)
+                {
+                    //Split up the link properties
+                    string WholeLinkURL = dynobject["Elements"]["Link Array"][i];
+                    var LinkURLarray = WholeLinkURL.Split('/');
+                    string[] UrlArray = LinkURLarray[LinkURLarray.Count() - 1].Split('|');
+
+                    //Send the the screen.
+                    string LinkName = UrlArray[0];
+                    string LinkType = UrlArray[1];
+                    string LinkGUID = UrlArray[2];
+                    dgvEA_Elements.Rows.Add(LinkName, LinkType);
                 }
 
-                statusStrip.Text = dynobject["ElementDictionary"].Count + " diagram elements from EA were found";
 
-                List<string> ListEleName = new List<string>();
 
-                txtDiagramName.Text = DiagramName;
-                txtDiagramType.Text = DiagramType;
+                //Split up the element properties
+
+                var VarURI = URI.Split('/');
+                string[] UriArray = VarURI[VarURI.Count() - 1].Split('|');
+            
+                txtDiagramName.Text = UriArray[0];
+                txtDiagramType.Text = UriArray[1];
 
 
             }
@@ -302,8 +319,14 @@ namespace AprocoDummy
 
         }
 
+        private void label7_Click(object sender, EventArgs e)
+        {
 
+        }
 
+        private void txtDiagramURL_TextChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }

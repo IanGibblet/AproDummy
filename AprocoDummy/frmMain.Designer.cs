@@ -49,6 +49,9 @@
             this.radBtnSmallPreview = new System.Windows.Forms.RadioButton();
             this.radBtnLargePreview = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBreakDownElements)).BeginInit();
             this.AproStatus.SuspendLayout();
@@ -59,9 +62,9 @@
             // 
             // btnShowBreakdowns
             // 
-            this.btnShowBreakdowns.Location = new System.Drawing.Point(8, 35);
+            this.btnShowBreakdowns.Location = new System.Drawing.Point(8, 70);
             this.btnShowBreakdowns.Name = "btnShowBreakdowns";
-            this.btnShowBreakdowns.Size = new System.Drawing.Size(198, 23);
+            this.btnShowBreakdowns.Size = new System.Drawing.Size(327, 23);
             this.btnShowBreakdowns.TabIndex = 0;
             this.btnShowBreakdowns.Text = "Show all Breakdown Elements";
             this.btnShowBreakdowns.UseVisualStyleBackColor = true;
@@ -86,6 +89,7 @@
             this.txtDiagramURL.TabIndex = 3;
             this.txtDiagramURL.Text = "http://localhost:56901/SPC/IanTest/Dia_Thingswithtags|otDiagram|%7B49763E96-79D0-" +
     "4690-8109-EF6AE0511259%7D";
+            this.txtDiagramURL.TextChanged += new System.EventHandler(this.txtDiagramURL_TextChanged);
             // 
             // label1
             // 
@@ -99,12 +103,12 @@
             this.dgvBreakDownElements.AllowUserToAddRows = false;
             this.dgvBreakDownElements.AllowUserToDeleteRows = false;
             this.dgvBreakDownElements.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBreakDownElements.Location = new System.Drawing.Point(8, 61);
+            this.dgvBreakDownElements.Location = new System.Drawing.Point(8, 99);
             this.dgvBreakDownElements.Name = "dgvBreakDownElements";
             this.dgvBreakDownElements.RowHeadersVisible = false;
             this.dgvBreakDownElements.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvBreakDownElements.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvBreakDownElements.Size = new System.Drawing.Size(867, 187);
+            this.dgvBreakDownElements.Size = new System.Drawing.Size(422, 149);
             this.dgvBreakDownElements.TabIndex = 7;
             // 
             // lblFeedback
@@ -146,7 +150,7 @@
             // 
             // txtSaS_URI
             // 
-            this.txtSaS_URI.Location = new System.Drawing.Point(212, 35);
+            this.txtSaS_URI.Location = new System.Drawing.Point(318, 30);
             this.txtSaS_URI.Name = "txtSaS_URI";
             this.txtSaS_URI.Size = new System.Drawing.Size(427, 20);
             this.txtSaS_URI.TabIndex = 11;
@@ -155,7 +159,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(209, 19);
+            this.label3.Location = new System.Drawing.Point(315, 14);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 13);
             this.label3.TabIndex = 12;
@@ -249,6 +253,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.txtSaS_URI);
             this.groupBox1.Controls.Add(this.btnShowBreakdowns);
@@ -259,6 +266,34 @@
             this.groupBox1.TabIndex = 23;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "ShareASpace";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(448, 124);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Name";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(436, 99);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(47, 13);
+            this.label6.TabIndex = 13;
+            this.label6.Text = "Identifier";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(576, 70);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(80, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Model Instance";
             // 
             // groupBox2
             // 
@@ -332,6 +367,9 @@
         private System.Windows.Forms.RadioButton radBtnLargePreview;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
     }
 }
 
