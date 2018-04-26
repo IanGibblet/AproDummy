@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using System.IO;
 using RestfulEA.Models;
 using System.Net.Http;
+using AprocoDummy.SupportClasses;
 
 namespace AprocoDummy
 {
@@ -28,10 +29,15 @@ namespace AprocoDummy
     {
 
         static string CurrentSpaceName = "Aprocone"; //The Current Working Space Name
+        private static readonly HttpClient client = new HttpClient();
 
         public frmMain()
         {
+
+       
+
             InitializeComponent();
+
         }
 
 
@@ -256,7 +262,6 @@ namespace AprocoDummy
         }
 
 
-
         private void btnSmlPreview_Click(object sender, EventArgs e)
         {
             string URL = txtDiagramURL.Text + "/SmallPreview";
@@ -319,14 +324,30 @@ namespace AprocoDummy
 
         }
 
-        private void label7_Click(object sender, EventArgs e)
+
+
+
+ 
+
+        private void btnImportMossec_Click(object sender, EventArgs e)
         {
+            MOSSEC_Parse mp = new MOSSEC_Parse();
+
+            mp.ParseMossecFromFile(@"C:\LandfillAprocone\Simple.xml");
+
+
+          
+
 
         }
 
-        private void txtDiagramURL_TextChanged(object sender, EventArgs e)
-        {
 
-        }
+
+
+
+      
+
+
+
     }
 }

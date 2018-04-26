@@ -53,6 +53,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnImportMossec = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBreakDownElements)).BeginInit();
             this.AproStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEA_Elements)).BeginInit();
@@ -80,16 +81,7 @@
             this.btnShowElements.Text = "Parse JSON";
             this.btnShowElements.UseVisualStyleBackColor = true;
             this.btnShowElements.Click += new System.EventHandler(this.btnShowElements_Click);
-            // 
-            // txtDiagramURL
-            // 
-            this.txtDiagramURL.Location = new System.Drawing.Point(386, 60);
-            this.txtDiagramURL.Name = "txtDiagramURL";
-            this.txtDiagramURL.Size = new System.Drawing.Size(520, 20);
-            this.txtDiagramURL.TabIndex = 3;
-            this.txtDiagramURL.Text = "http://localhost:56901/SPC/IanTest/Dia_Thingswithtags|otDiagram|%7B49763E96-79D0-" +
-    "4690-8109-EF6AE0511259%7D";
-            this.txtDiagramURL.TextChanged += new System.EventHandler(this.txtDiagramURL_TextChanged);
+         
             // 
             // label1
             // 
@@ -269,16 +261,7 @@
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(448, 124);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 13);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "Name";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
-            // 
-            // label6
-            // 
+
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(436, 99);
             this.label6.Name = "label6";
@@ -297,6 +280,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnImportMossec);
             this.groupBox2.Controls.Add(this.btnLargePreview);
             this.groupBox2.Controls.Add(this.btnSmlPreview);
             this.groupBox2.Controls.Add(this.txtDiagramType);
@@ -312,6 +296,16 @@
             this.groupBox2.TabIndex = 24;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Enterprise Architect";
+            // 
+            // btnImportMossec
+            // 
+            this.btnImportMossec.Location = new System.Drawing.Point(149, 257);
+            this.btnImportMossec.Name = "btnImportMossec";
+            this.btnImportMossec.Size = new System.Drawing.Size(168, 23);
+            this.btnImportMossec.TabIndex = 25;
+            this.btnImportMossec.Text = "Import MOSSEC";
+            this.btnImportMossec.UseVisualStyleBackColor = true;
+            this.btnImportMossec.Click += new System.EventHandler(this.btnImportMossec_Click);
             // 
             // frmMain
             // 
@@ -370,6 +364,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnImportMossec;
     }
 }
 
